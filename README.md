@@ -3,7 +3,7 @@ Simple hotkey mod for The Long Dark game made by Hinterland Studios.
 When you install this mod, it generates a json, and there, you can customize gearitems and hotkeys.  
 You can define more than one item to a hotkey.  
 When equiping firearms, guns with the most bullets in the magazine will be equiped. (If in the json list)  
-When equiping torches, the oe item with the LEAST codition comes up. In vanilla, it's the one with the highest condition.  
+When equiping torches, the one item with the LEAST codition comes up. In vanilla, it's the one with the highest condition.  
 The basic rule after the above rules: first item in the list is going to be equiped.  
 # Installation
 Download and place the dll file into your \Mods folder.  
