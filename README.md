@@ -1,4 +1,4 @@
-# HotkeyMod
+# Hotkey Mod
 Simple hotkey mod for The Long Dark game made by Hinterland Studios.  
 When you install this mod, it generates a json, and there, you can customize gearitems and hotkeys.  
 You can define more than one item to a hotkey.  
