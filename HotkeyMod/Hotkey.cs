@@ -1,4 +1,6 @@
-﻿using Il2Cpp;
+﻿#nullable disable
+
+using Il2Cpp;
 using Il2CppTLD.Gear;
 using MelonLoader;
 using MelonLoader.Utils;
