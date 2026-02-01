@@ -1,5 +1,4 @@
 ﻿#nullable disable
-
 using Il2Cpp;
 using Il2CppTLD.Gear;
 using MelonLoader;
@@ -129,12 +128,17 @@ namespace Hotkey
                     return;
                 }
 
-                // Torch handling: pick lowest HP
-                List<(GearItem gi, int slot, int priority)> torchCandidates = new List<(GearItem gi, int slot, int priority)>();
+                // Torch handling: pick lowest HP > 0
+                List<(GearItem gi, int slot, int priority)> torchCandidates =
+                    new List<(GearItem gi, int slot, int priority)>();
+
                 foreach ((GearItem gi, int slot, int priority) c in candidates)
                 {
-                    if (c.gi.name.IndexOf("Torch", StringComparison.OrdinalIgnoreCase) >= 0)
+                    if (c.gi.name.IndexOf("Torch", StringComparison.OrdinalIgnoreCase) >= 0 &&
+                        c.gi.m_CurrentHP > 0f)
+                    {
                         torchCandidates.Add(c);
+                    }
                 }
 
                 (GearItem gi, int slot, int priority) chosen;
@@ -143,6 +147,7 @@ namespace Hotkey
                 {
                     float minHP = float.MaxValue;
                     (GearItem gi, int slot, int priority) best = (null, 0, int.MaxValue);
+
                     foreach ((GearItem gi, int slot, int priority) t in torchCandidates)
                     {
                         if (t.gi.m_CurrentHP < minHP)
@@ -151,6 +156,7 @@ namespace Hotkey
                             best = t;
                         }
                     }
+
                     chosen = best;
                 }
                 else
