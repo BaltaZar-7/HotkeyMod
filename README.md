@@ -16,3 +16,4 @@ In the Json file the setup for clothes works like this: there should be: ":1" or
 Mod for The Long Dark game created by Hinterland Studios  
 Modtemplate by Digitalzombie  
 Made by BaltaZar  
+[![Github All Releases](https://img.shields.io/github/downloads/BaltaZar-7/HotkeyMod/total.svg)]()
