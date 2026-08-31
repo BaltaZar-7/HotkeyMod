@@ -18,7 +18,7 @@ namespace Hotkey
         private Dictionary<string, GearItem> _previousClothing = new Dictionary<string, GearItem>();
         private bool _debugEnabled = false;
 
-        public override void OnApplicationStart()
+        public override void OnInitializeMelon()
         {
             MelonLogger.Msg("Hotkey Overhaul mod loaded");
 
@@ -28,12 +28,41 @@ namespace Hotkey
             LoadConfig();
         }
 
-        public override void OnUpdate()
+        /*public override void OnUpdate()
         {
             foreach (KeyValuePair<KeyCode, List<string>> kv in _hotkeyBindings)
             {
                 if (Input.GetKeyDown(kv.Key))
                 {
+                    DebugLog($"Hotkey pressed: {kv.Key}, trying to equip...");
+                    EquipBestItemFromList(kv.Value);
+                }
+            }
+        }*/
+        public override void OnUpdate()
+        {
+            bool panelChecked = false;
+            bool blocked = false;
+
+            //if (Input.GetKeyDown(KeyCode.F9))
+                //DebugDumpPanels();
+
+            foreach (KeyValuePair<KeyCode, List<string>> kv in _hotkeyBindings)
+            {
+                if (Input.GetKeyDown(kv.Key))
+                {
+                    if (!panelChecked)
+                    {
+                        blocked = IsBlockingPanelOpen();
+                        panelChecked = true;
+                    }
+
+                    if (blocked)
+                    {
+                        DebugLog($"Hotkey {kv.Key} ignored, panel is open");
+                        continue;
+                    }
+
                     DebugLog($"Hotkey pressed: {kv.Key}, trying to equip...");
                     EquipBestItemFromList(kv.Value);
                 }
@@ -277,5 +306,26 @@ namespace Hotkey
             if (_debugEnabled)
                 MelonLogger.Msg("[Hotkey DEBUG] " + msg);
         }
+        private bool IsBlockingPanelOpen()
+        {
+            Panel_Base[] panels = UnityEngine.Object.FindObjectsOfType<Panel_Base>();
+            foreach (Panel_Base panel in panels)
+            {
+                if (panel == null) continue;
+                if (!panel.IsEnabled()) continue;
+                if (panel.IsOverlayPanel())
+                {
+                    DebugLog($"Blocking panel open: {panel.GetType().Name}");
+                    return true;
+                }
+            }
+            return false;
+        }
+        private static readonly HashSet<string> _ignoredPanelTypes = new HashSet<string>
+        {
+            "Panel_HUD",
+            "Panel_Crosshair",
+            "Panel_Notification",
+        };      
     }
 }
